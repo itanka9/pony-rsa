@@ -1,0 +1,36 @@
+{
+  "name": "pony-rsa",
+  "version": "1.0.0",
+  "description": "Simple RSA implementation, written because i can",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itanka9/pony-rsa.git"
+  },
+  "keywords": [
+    "rsa"
+  ],
+  "author": "Itanka The Ninest",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/itanka9/pony-rsa/issues"
+  },
+  "homepage": "https://github.com/itanka9/pony-rsa#readme",
+  "dependencies": {
+    "@babel/polyfill": "^7.0.0",
+    "big-integer": "^1.6.36",
+    "flow-bin": "^0.81.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.0",
+    "@babel/core": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-flow": "^7.0.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "jest": "^23.6.0"
+  }
+}
