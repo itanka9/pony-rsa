@@ -1,20 +1,8 @@
 import bigInt from 'big-integer'
+import { toBn, fromBn } from './enc'
+import { bnMap, bnSize } from './num'
 
-const CHAR_BASE = 256
-
-export const toBN = s => s.split('').reduce((acc, c) => acc.times(CHAR_BASE).add(c.charCodeAt(0)), bigInt(0))
-
-export const fromBN = n => {
-    const result = []
-    while (!n.eq(0)) { // BAWWWW: Хачу unflodr
-        const { quotient, remainder } = n.divmod(CHAR_BASE)
-        result.unshift(String.fromCharCode(remainder.toJSNumber()))
-        n = quotient
-    }
-    return result.join('')
-}
-
-const withBN = (s, f) => fromBN(f(toBN(s)))
+const withBn = (s, f) => fromBn(f(toBn(s)))
 
 export const makeKeys = (p, q, e) => {
     const d = e.modInv(p.minus(1).times(q.minus(1)))
@@ -23,5 +11,12 @@ export const makeKeys = (p, q, e) => {
     return [{e, m}, {d, m}]
 }
 
-export const encrypt = (key: PublicKey, x: string): string => withBN(x, x => x.modPow(key.e, key.m))
-export const decrypt = (key: PrivateKey, y: string): string => withBN(y, y => y.modPow(key.d, key.m))
+export const encrypt = (pubkey, x) => withBn(
+    x,
+    n => bnMap(2 ** bnSize(pubkey.m), n, nc => nc.modPow(pubkey.e, pubkey.m))
+)
+
+export const decrypt = (key, y) => withBn(
+    y,
+    n => bnMap(2 ** bnSize(key.m), n, nc => nc.modPow(key.d, key.m))
+)

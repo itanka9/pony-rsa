@@ -15,7 +15,7 @@ const [pubkey, key] = makeKeys(bigInt(9007), bigInt(102877), bigInt(104723))
 // ... Transfer pubkey to ALICE ...
 
 // ALICE
-const encrypted = encrypt(pubkey, 'XY')
+const encrypted = encrypt(pubkey, 'Hello')
 
 // BOB
 decrypt(key, encrypted)

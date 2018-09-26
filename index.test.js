@@ -1,17 +1,23 @@
 import bigInt from 'big-integer'
-import { toBN, fromBN, encrypt, decrypt, makeKeys } from './index'
+import { toBn, fromBn } from './enc'
+import { encrypt, decrypt, makeKeys } from './index'
+import { bnSize } from './num';
 
-const original = 'XY'
+const message = 'Franky goes to Hollywood!'
+
 const [pubkey, key] = makeKeys(bigInt(9007), bigInt(102877), bigInt(104723))
 
-const encrypted = encrypt(pubkey, original)
+const encrypted = encrypt(pubkey, message)
 const decrypted = decrypt(key, encrypted)
 
-console.log(pubkey)
-console.log(key)
-console.log(JSON.stringify(encrypted))
-console.log(toBN(original))
+test('fromBn(toBn(original)) === message', () => {
+    expect(fromBn(toBn(message))).toBe(message)
+})
 
-test('fromBN(toBN(original)) === original', () => { expect(fromBN(toBN(original))).toBe(original) })
-test('decrypt encrypted === original', () => { expect(decrypted).toBe(original) });
-test('encrypted !== decrypted', () => { expect(decrypted).not.toBe(encrypted) });
+test('decrypt encrypted === message', () => {
+    expect(decrypted).toBe(message)
+})
+
+test('encrypted !== decrypted', () => {
+    expect(decrypted).not.toBe(encrypted)
+})
